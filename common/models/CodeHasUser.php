@@ -47,6 +47,11 @@ class CodeHasUser extends ActiveRecord
         ];
     }
 
+    public static function checkUserToken ($token) {
+        $model = self::findOne(['user_token' => $token]);
+        return $model instanceof self;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

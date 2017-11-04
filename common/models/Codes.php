@@ -1,5 +1,7 @@
 <?php namespace common\models;
 
+use Carbon\Carbon;
+use Faker\Provider\DateTime;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -84,6 +86,29 @@ class Codes extends ActiveRecord
         return self::statuses()[self::STATUS_INACTIVE];
     }
 
+    public function activate ($token) {
+        if (!$this->isActive() && CodeHasUser::checkUserToken($token) && $this->checkDate()) {
+            $code_has_user = new CodeHasUser();
+            $code_has_user->user_token = $token;
+            $code_has_user->code_id = $this->id;
+            if ($code_has_user->save()) {
+                $this->updateAttributes(['status' => self::STATUS_ACTIVE]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function checkDate () {
+        $now = strtotime(Carbon::now()->format("Y-m-d"));
+        $start = strtotime($this->start_date);
+        $end = strtotime($this->end_date);
+        return $start < $now && $end > $now;
+    }
+
+    public function isActive () {
+        return $this->status == self::STATUS_ACTIVE;
+    }
 
     /**
      * @return \yii\db\ActiveQuery

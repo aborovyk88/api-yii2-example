@@ -36,7 +36,7 @@ use kartik\date\DatePicker;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'tariff_zone')->textInput(['maxlength' => 10]) ?>
+    <?= $form->field($model, 'tariff_zone')->dropDownList(Codes::zones()) ?>
 
     <?= $form->field($model, 'customer_reward')->textInput(['maxlength' => 50]) ?>
 

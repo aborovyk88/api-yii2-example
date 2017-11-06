@@ -50,7 +50,13 @@ use common\models\Codes;
                     return $date->format("d.m.Y");
                 }
             ],
-            'tariff_zone',
+            [
+                'attribute' => 'tariff_zone',
+                'value' => function ($model) {
+                    /** @var $model Codes */
+                    return $model->zoneString();
+                }
+            ],
             [
                 'attribute' => 'customer_reward',
                 'value' => function ($model) {

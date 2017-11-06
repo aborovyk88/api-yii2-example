@@ -24,6 +24,10 @@ class Codes extends ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const ZONE_EUROPE = 'europe';
+    const ZONE_ASIA = 'asia';
+    const ZONE_USA = 'usa';
+    const ZONE_SNG = 'sng';
     /**
      * @inheritdoc
      */
@@ -64,6 +68,22 @@ class Codes extends ActiveRecord
         ];
     }
 
+    public static function zones () {
+        return [
+            self::ZONE_EUROPE => 'Europe',
+            self::ZONE_ASIA => 'Asia',
+            self::ZONE_USA => 'USA',
+            self::ZONE_SNG => 'SNG'
+        ];
+    }
+
+    public function zoneString() {
+        if (isset(self::zones()[$this->tariff_zone])) {
+            return self::zones()[$this->tariff_zone];
+        }
+        return null;
+    }
+
     public function validateDate($attribute, $param)
     {
         $result = strtotime($this->start_date) < strtotime($this->end_date);
@@ -94,7 +114,7 @@ class Codes extends ActiveRecord
                     $code_has_user->user_token = $token;
                     $code_has_user->code_id = $this->id;
                     if ($code_has_user->save()) {
-                        return ['code' => 200, 'message' => 'Code successfully activated'];
+                        return ['code' => 200, 'message' => 'Code successfully activated', 'amount' => $this->customer_reward];
                     }
                 }
                 return ['code' => 500, 'message' => 'Code is not active'];

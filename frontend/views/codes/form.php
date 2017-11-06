@@ -5,9 +5,9 @@
 /* @var $form yii\widgets\ActiveForm */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use common\models\Codes;
+use kartik\date\DatePicker;
 ?>
 
 <div class="code-form">
@@ -20,9 +20,21 @@ use common\models\Codes;
 
     <?= $form->field($model, 'status')->dropDownList(Codes::statuses()) ?>
 
-    <?= $form->field($model, 'start_date')->textInput() ?>
+    <?= $form->field($model, 'start_date')->widget(DatePicker::className(), [
+        'options' => ['placeholder' => 'Select date ...'],
+        'pluginOptions' => [
+            'format' => 'yyyy-mm-dd',
+            'todayHighlight' => true
+        ]
+    ]) ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date')->widget(DatePicker::className(), [
+        'options' => ['placeholder' => 'Select date ...'],
+        'pluginOptions' => [
+            'format' => 'yyyy-mm-dd',
+            'todayHighlight' => true
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'tariff_zone')->textInput(['maxlength' => 10]) ?>
 

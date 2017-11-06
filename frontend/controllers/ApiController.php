@@ -32,7 +32,7 @@ class ApiController extends ActiveController {
     {
         $actions = parent::actions();
 
-        unset($actions['delete'], $actions['create']);
+        unset($actions['delete'], $actions['create'], $actions['update']);
 
         return $actions;
     }

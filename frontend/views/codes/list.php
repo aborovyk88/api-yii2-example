@@ -39,7 +39,7 @@ use common\models\Codes;
                 'value' => function ($model) {
                     /** @var $model Codes */
                     $date = new DateTime($model->start_date);
-                    return $date->format("Y-m-d");
+                    return $date->format("d.m.Y");
                 }
             ],
             [
@@ -47,7 +47,7 @@ use common\models\Codes;
                 'value' => function ($model) {
                     /** @var $model Codes */
                     $date = new DateTime($model->end_date);
-                    return $date->format("Y-m-d");
+                    return $date->format("d.m.Y");
                 }
             ],
             'tariff_zone',

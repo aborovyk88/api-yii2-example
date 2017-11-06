@@ -47,8 +47,8 @@ class CodeHasUser extends ActiveRecord
         ];
     }
 
-    public static function checkUserToken ($token) {
-        $model = self::findOne(['user_token' => $token]);
+    public static function checkUserToken ($token, $code) {
+        $model = self::findOne(['user_token' => $token, 'code_id' => $code]);
         return $model instanceof self;
     }
 

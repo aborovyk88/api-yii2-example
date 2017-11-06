@@ -48,7 +48,7 @@ class ApiController extends ActiveController {
 
     public function actionActivateDiscount () {
         if (!Yii::$app->request->isPost) {
-            throw new BadRequestHttpException('Invalid query method', 500);
+            return ['code' => 500, 'message' => 'Invalid query method'];
         }
         $name = Yii::$app->request->post('name');
         $zone = Yii::$app->request->post('zone');
@@ -58,7 +58,7 @@ class ApiController extends ActiveController {
             ->andWhere(['name' => $name])
             ->one();
         if (!($code instanceof Codes)) {
-            throw new NotFoundHttpException('Code in not found', 422);
+            return ['code' => 404, 'message' => 'Code is not found'];
         }
         return $code->activate($token_user);
     }

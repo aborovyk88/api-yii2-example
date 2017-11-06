@@ -87,16 +87,21 @@ class Codes extends ActiveRecord
     }
 
     public function activate ($token) {
-        if (!$this->isActive() && CodeHasUser::checkUserToken($token) && $this->checkDate()) {
-            $code_has_user = new CodeHasUser();
-            $code_has_user->user_token = $token;
-            $code_has_user->code_id = $this->id;
-            if ($code_has_user->save()) {
-                $this->updateAttributes(['status' => self::STATUS_ACTIVE]);
-                return true;
+        if ($this->isActive()) {
+            if (!CodeHasUser::checkUserToken($token, $this->id)) {
+                if ($this->checkDate()) {
+                    $code_has_user = new CodeHasUser();
+                    $code_has_user->user_token = $token;
+                    $code_has_user->code_id = $this->id;
+                    if ($code_has_user->save()) {
+                        return ['code' => 200, 'message' => 'Code successfully activated'];
+                    }
+                }
+                return ['code' => 500, 'message' => 'Code is not active'];
             }
+            return ['code' => 500, 'message' => 'You have already activated this code'];
         }
-        return false;
+        return ['code' => 500, 'message' => 'Code is not active'];
     }
 
     public function checkDate () {

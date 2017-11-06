@@ -44,10 +44,10 @@ class Alert
 
     public static function messages() {
         return [
-            self::ERROR => Yii::t('messages', 'Your request failed with errors:'),
-            self::WARNING => Yii::t('messages', 'Your request ends with warnings:'),
-            self::SUCCESS => Yii::t('messages', 'Your request ends successfully'),
-            self::NONE => Yii::t('messages', 'Can not determine alert type'),
+            self::ERROR => 'Your request failed with errors:',
+            self::WARNING => 'Your request ends with warnings:',
+            self::SUCCESS => 'Your request ends successfully',
+            self::NONE => 'Can not determine alert type',
         ];
     }
 

@@ -163,11 +163,9 @@ class Alert
      * @return string
      */
     public static function printAlert(&$viewInstance) {
-        /**@var \common\components\MainView $viewInstance */
         $result = '';
-        $view = SiteConfig::getConfigValue(SiteConfig::IS_DETAILED_ALERT) ? 'alertView' : 'alertSmallView';
         if(self::issetAlerts()) {
-            $result = $viewInstance->render('/' . $view, ['general_message' => self::getGeneralMessage(),
+            $result = $viewInstance->render('/alertView', ['general_message' => self::getGeneralMessage(),
                                                           'general_color' => self::getColor(),
                                                           'success_store' => self::getAlertStore(self::SUCCESS),
                                                           'warning_store' => self::getAlertStore(self::WARNING),
